@@ -8,10 +8,9 @@ const RailNavigation = () => {
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'Features', href: '#features' },
+    { name: 'QR Scanner', href: '#scanner' },
     { name: 'AI Chatbot', href: '#chatbot' },
     { name: 'AI Reminders', href: '#reminders' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -25,19 +24,24 @@ const RailNavigation = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-muted-foreground hover:text-primary smooth-transition"
+                className="text-muted-foreground hover:text-primary smooth-transition font-medium"
               >
                 {item.name}
               </a>
             ))}
-            <Button variant="railway" size="sm">
-              Get Started
-            </Button>
+            <div className="flex items-center space-x-2 ml-6 border-l border-border pl-6">
+              <Button variant="outline" size="sm" asChild>
+                <a href="/login">Sign In</a>
+              </Button>
+              <Button variant="railway" size="sm">
+                Get Started
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -55,21 +59,26 @@ const RailNavigation = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden py-4">
-            <div className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-muted-foreground hover:text-primary smooth-transition"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-              <Button variant="railway" size="sm" className="w-fit">
-                Get Started
-              </Button>
-            </div>
+              <div className="flex flex-col space-y-4">
+                {navItems.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-muted-foreground hover:text-primary smooth-transition font-medium"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+                <div className="pt-4 border-t border-border flex flex-col space-y-2">
+                  <Button variant="outline" size="sm" className="w-fit" asChild>
+                    <a href="/login">Sign In</a>
+                  </Button>
+                  <Button variant="railway" size="sm" className="w-fit">
+                    Get Started
+                  </Button>
+                </div>
+              </div>
           </div>
         )}
       </div>
