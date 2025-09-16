@@ -2,41 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Rail Pehchaan Design System - Railway Technology Theme */
 
 @layer base {
   :root {
+    /* Core Railway Colors */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    --foreground: 215 25% 15%;
+    
+    /* Railway Blue Theme */
+    --primary: 220 85% 35%; /* Railway Blue */
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 220 85% 30%;
+    --primary-glow: 220 85% 50%;
+    
+    /* Railway Orange Accent */
+    --accent: 25 95% 50%; /* Safety Orange */
+    --accent-foreground: 0 0% 98%;
+    --accent-hover: 25 95% 45%;
+    
+    /* Steel/Metal Tones */
+    --secondary: 210 15% 92%;
+    --secondary-foreground: 215 25% 15%;
+    --muted: 210 15% 95%;
+    --muted-foreground: 215 15% 45%;
+    
+    /* Card and Surface */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 215 25% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    --popover-foreground: 215 25% 15%;
+    
+    /* Utility Colors */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 20% 88%;
+    --input: 210 20% 92%;
+    --ring: 220 85% 35%;
+    
+    /* Railway Gradients */
+    --gradient-railway: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-steel: linear-gradient(180deg, hsl(var(--secondary)), hsl(var(--muted)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    
+    /* Professional Shadows */
+    --shadow-railway: 0 10px 40px -10px hsl(var(--primary) / 0.3);
+    --shadow-steel: 0 4px 20px -4px hsl(215 25% 15% / 0.15);
+    --shadow-glow: 0 0 30px hsl(var(--primary-glow) / 0.4);
+    
+    /* Animation Timing */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,33 +74,35 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    /* Dark Railway Theme */
+    --background: 215 30% 8%;
+    --foreground: 0 0% 95%;
+    
+    --primary: 220 85% 60%;
+    --primary-foreground: 215 30% 8%;
+    --primary-hover: 220 85% 55%;
+    --primary-glow: 220 85% 70%;
+    
+    --accent: 25 95% 60%;
+    --accent-foreground: 215 30% 8%;
+    --accent-hover: 25 95% 55%;
+    
+    --secondary: 215 25% 15%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 215 25% 12%;
+    --muted-foreground: 215 15% 65%;
+    
+    --card: 215 25% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 215 25% 10%;
+    --popover-foreground: 0 0% 95%;
+    
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 25% 20%;
+    --input: 215 25% 18%;
+    --ring: 220 85% 60%;
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -100,6 +120,39 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-medium;
+  }
+  
+  /* Railway UI Enhancements */
+  .railway-gradient {
+    background: var(--gradient-railway);
+  }
+  
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+  
+  .steel-gradient {
+    background: var(--gradient-steel);
+  }
+  
+  .railway-shadow {
+    box-shadow: var(--shadow-railway);
+  }
+  
+  .steel-shadow {
+    box-shadow: var(--shadow-steel);
+  }
+  
+  .glow-shadow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .smooth-transition {
+    transition: var(--transition-smooth);
+  }
+  
+  .bounce-transition {
+    transition: var(--transition-bounce);
   }
 }
