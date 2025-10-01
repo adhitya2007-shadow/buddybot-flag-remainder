@@ -5,6 +5,7 @@ import FeaturesSection from '@/components/FeaturesSection';
 import QRScannerComponent from '@/components/QRScanner';
 import AIChatbot from '@/components/AIChatbot';
 import AIReminders from '@/components/AIReminders';
+import IssueFlagging from '@/components/IssueFlagging';
 
 const Index = () => {
   return (
@@ -21,6 +22,9 @@ const Index = () => {
         </section>
         <section id="reminders" className="scroll-mt-16">
           <AIReminders />
+        </section>
+        <section id="flag-issue" className="scroll-mt-16">
+          <IssueFlagging />
         </section>
       </main>
     </div>

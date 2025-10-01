@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, CheckCircle, Zap } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 import railwayHero from '@/assets/railway-hero.jpg';
 
 const HeroSection = () => {
@@ -19,12 +18,6 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
-          {/* Badge */}
-          <Badge variant="secondary" className="mb-6 text-sm animate-fade-in">
-            <Zap className="w-4 h-4 mr-2" />
-            Smart India Hackathon 2025 Winner
-          </Badge>
-
           {/* Main Heading */}
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-foreground animate-slide-up" style={{ animationDelay: '0.1s' }}>
             Rail <span className="hero-gradient bg-clip-text text-transparent">Pehchaan</span>

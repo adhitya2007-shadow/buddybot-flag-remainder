@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Home, Zap, QrCode, MessageSquare, Bell, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, Zap, QrCode, MessageSquare, Bell, Flag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const RailNavigation = () => {
@@ -8,15 +8,15 @@ const RailNavigation = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: 'Home', href: '/', icon: Home },
+    { name: 'Home', href: '#home', icon: Home },
     { name: 'Features', href: '#features', icon: Zap },
     { name: 'QR Scanner', href: '#scanner', icon: QrCode },
+    { name: 'Flag Issue', href: '#flag-issue', icon: Flag },
     { name: 'AI Chatbot', href: '#chatbot', icon: MessageSquare },
     { name: 'AI Reminders', href: '#reminders', icon: Bell },
   ];
 
   const isActive = (href: string) => {
-    if (href === '/') return location.pathname === '/';
     return location.hash === href || window.location.hash === href;
   };
 
@@ -66,9 +66,9 @@ const RailNavigation = () => {
         {/* Bottom Section */}
         <div className="p-4 border-t border-border space-y-2">
           {!isCollapsed && (
-            <Link to="/login" className="block animate-fade-in">
+            <Link to="/" className="block animate-fade-in">
               <Button variant="outline" size="sm" className="w-full">
-                Sign In
+                Logout
               </Button>
             </Link>
           )}
