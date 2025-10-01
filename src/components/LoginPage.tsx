@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { toast } from 'sonner';
 import { 
   Mail, 
   Lock, 
@@ -17,9 +19,20 @@ import {
 } from 'lucide-react';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email && password) {
+      toast.success('Login successful!');
+      navigate('/dashboard');
+    } else {
+      toast.error('Please enter email and password');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/50 flex items-center justify-center p-4">
@@ -51,6 +64,7 @@ const LoginPage = () => {
 
         {/* Login Form */}
         <Card className="steel-shadow">
+          <form onSubmit={handleLogin}>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="w-5 h-5" />
@@ -110,6 +124,7 @@ const LoginPage = () => {
 
             {/* Login Button */}
             <Button 
+              type="submit"
               className="w-full" 
               variant="railway" 
               size="lg"
@@ -164,6 +179,7 @@ const LoginPage = () => {
               </div>
             </div>
           </CardContent>
+          </form>
         </Card>
 
         {/* Footer */}
