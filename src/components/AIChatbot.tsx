@@ -134,7 +134,7 @@ const AIChatbot = () => {
   return (
     <section id="chatbot" className="py-24">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <Badge variant="secondary" className="mb-4">
             AI Support
           </Badge>
@@ -148,7 +148,7 @@ const AIChatbot = () => {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <Card className="h-[600px] flex flex-col railway-shadow">
+          <Card className="h-[600px] flex flex-col railway-shadow animate-slide-up">
             <CardHeader className="border-b">
               <CardTitle className="flex items-center gap-2">
                 <Bot className="w-5 h-5 text-primary" />

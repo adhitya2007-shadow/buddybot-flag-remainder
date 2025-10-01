@@ -144,7 +144,7 @@ const QRScannerComponent = () => {
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-fade-in">
           <Badge variant="secondary" className="mb-4">
             <QrCode className="w-4 h-4 mr-2" />
             QR Scanner
@@ -159,7 +159,7 @@ const QRScannerComponent = () => {
 
         <div className="max-w-4xl mx-auto">
           {!partDetails ? (
-            <Card className="border-border">
+            <Card className="border-border animate-slide-up">
               <CardHeader className="text-center">
                 <CardTitle className="flex items-center justify-center gap-2">
                   <Camera className="w-5 h-5" />
@@ -231,7 +231,7 @@ const QRScannerComponent = () => {
               </CardContent>
             </Card>
           ) : (
-            <Card className="border-border">
+            <Card className="border-border animate-fade-in">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-2xl">{partDetails.name}</CardTitle>

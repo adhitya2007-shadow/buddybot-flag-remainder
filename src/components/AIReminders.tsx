@@ -172,7 +172,7 @@ const AIReminders = () => {
   return (
     <section id="reminders" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <Badge variant="secondary" className="mb-4">
             AI Reminders
           </Badge>
@@ -196,7 +196,7 @@ const AIReminders = () => {
             ].map((stat, index) => {
               const IconComponent = stat.icon;
               return (
-                <Card key={index} className="steel-shadow">
+                <Card key={index} className="steel-shadow animate-slide-up hover-lift" style={{ animationDelay: `${index * 0.1}s` }}>
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -276,7 +276,7 @@ const ComponentCard = ({
   const isUrgent = daysUntil <= 7;
 
   return (
-    <Card className="railway-shadow hover:steel-shadow smooth-transition">
+    <Card className="railway-shadow hover:steel-shadow smooth-transition hover-lift animate-fade-in">
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between">
           <div className="flex-1">

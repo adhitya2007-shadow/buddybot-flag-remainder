@@ -61,7 +61,7 @@ const FeaturesSection = () => {
   return (
     <section id="features" className="py-24 bg-muted/50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <Badge variant="secondary" className="mb-4">
             Core Features
           </Badge>
@@ -78,7 +78,7 @@ const FeaturesSection = () => {
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <Card key={index} className="group hover:railway-shadow smooth-transition border-border hover:border-primary/20">
+              <Card key={index} className="group hover:railway-shadow smooth-transition border-border hover:border-primary/20 hover-lift animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardHeader>
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 smooth-transition">
@@ -111,7 +111,7 @@ const FeaturesSection = () => {
         </div>
 
         {/* Integration Section */}
-        <div className="mt-20 text-center">
+        <div className="mt-20 text-center animate-fade-in">
           <h3 className="text-2xl md:text-3xl font-bold mb-8">
             Seamless Integration
           </h3>
@@ -123,8 +123,8 @@ const FeaturesSection = () => {
             ].map((integration, index) => {
               const IconComponent = integration.icon;
               return (
-                <div key={index} className="text-center">
-                  <div className="inline-flex p-4 bg-accent/10 rounded-full mb-4">
+                <div key={index} className="text-center animate-slide-up hover-scale" style={{ animationDelay: `${index * 0.15}s` }}>
+                  <div className="inline-flex p-4 bg-accent/10 rounded-full mb-4 smooth-transition">
                     <IconComponent className="w-8 h-8 text-accent" />
                   </div>
                   <h4 className="font-semibold mb-2">{integration.title}</h4>

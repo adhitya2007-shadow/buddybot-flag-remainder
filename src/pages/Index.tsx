@@ -8,9 +8,9 @@ import AIReminders from '@/components/AIReminders';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex">
       <RailNavigation />
-      <main>
+      <main className="flex-1 ml-64 smooth-transition">
         <HeroSection />
         <FeaturesSection />
         <section id="scanner" className="scroll-mt-16">
