@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { QrCode, Camera, X, CheckCircle, AlertCircle } from 'lucide-react';
-import QrScanner from 'qr-scanner';
+import type QrScanner from 'qr-scanner';
 
 interface PartDetails {
   id: string;
@@ -23,6 +23,7 @@ const QRScannerComponent = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [scannedData, setScannedData] = useState<string | null>(null);
   const [partDetails, setPartDetails] = useState<PartDetails | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Mock part details database
   const mockPartDatabase: Record<string, PartDetails> = {
@@ -88,7 +89,13 @@ const QRScannerComponent = () => {
     if (!videoRef.current) return;
 
     try {
+      setIsLoading(true);
       setIsScanning(true);
+      
+      // Dynamically import the QR scanner library only when needed
+      const QrScannerModule = await import('qr-scanner');
+      const QrScanner = QrScannerModule.default;
+      
       const qrScanner = new QrScanner(
         videoRef.current,
         (result) => {
@@ -105,9 +112,11 @@ const QRScannerComponent = () => {
 
       await qrScanner.start();
       setScanner(qrScanner);
+      setIsLoading(false);
     } catch (error) {
       console.error('Error starting scanner:', error);
       setIsScanning(false);
+      setIsLoading(false);
     }
   };
 
@@ -186,9 +195,9 @@ const QRScannerComponent = () => {
 
                 <div className="flex justify-center gap-4">
                   {!isScanning ? (
-                    <Button onClick={startScanning} variant="railway" size="lg">
+                    <Button onClick={startScanning} variant="railway" size="lg" disabled={isLoading}>
                       <Camera className="w-5 h-5 mr-2" />
-                      Start Scanning
+                      {isLoading ? 'Loading Scanner...' : 'Start Scanning'}
                     </Button>
                   ) : (
                     <Button onClick={stopScanning} variant="outline" size="lg">
