@@ -48,11 +48,15 @@ const AIChatbot = () => {
   ];
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Delay scroll slightly to allow animation to start
+    const timer = setTimeout(() => {
+      scrollToBottom();
+    }, 50);
+    return () => clearTimeout(timer);
   }, [messages]);
 
   const generateBotResponse = (userMessage: string): Message => {
@@ -164,10 +168,11 @@ const AIChatbot = () => {
               {/* Messages Area */}
               <ScrollArea className="flex-1 p-4 h-full">
                 <div className="space-y-4 pr-4">
-                  {messages.map((message) => (
+                  {messages.map((message, index) => (
                     <div
                       key={message.id}
-                      className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                      className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                      style={{ animationDelay: `${index * 0.05}s` }}
                     >
                       <div className={`flex items-start gap-3 max-w-[80%] ${
                         message.type === 'user' ? 'flex-row-reverse' : 'flex-row'
@@ -201,7 +206,7 @@ const AIChatbot = () => {
                   ))}
                   
                   {isTyping && (
-                    <div className="flex justify-start">
+                    <div className="flex justify-start animate-fade-in">
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-full bg-secondary text-secondary-foreground">
                           <Bot className="w-4 h-4" />
@@ -239,20 +244,26 @@ const AIChatbot = () => {
               </div>
 
               {/* Input Area */}
-              <div className="p-4 border-t">
+              <div className="p-4 border-t flex-shrink-0">
                 <div className="flex gap-2">
                   <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Type your complaint or question..."
-                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                    className="flex-1"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
+                    className="flex-1 smooth-transition"
                   />
                   <Button 
                     onClick={handleSendMessage}
                     variant="railway"
                     size="icon"
                     disabled={!inputValue.trim() || isTyping}
+                    className="smooth-transition hover-scale"
                   >
                     <Send className="w-4 h-4" />
                   </Button>
