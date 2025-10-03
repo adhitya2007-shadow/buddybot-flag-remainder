@@ -1,0 +1,4 @@
+project_id = "fuqxztbsxmtkhsxdubso"
+
+[functions.rail-chat]
+verify_jwt = false

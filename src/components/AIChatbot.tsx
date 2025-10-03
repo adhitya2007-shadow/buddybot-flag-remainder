@@ -15,6 +15,7 @@ import {
   Wrench
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Message {
   id: string;
@@ -59,40 +60,58 @@ const AIChatbot = () => {
     return () => clearTimeout(timer);
   }, [messages]);
 
-  const generateBotResponse = (userMessage: string): Message => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    let response = '';
-    let category: 'complaint' | 'info' | 'resolved' = 'info';
+  const getAIResponse = async (userMessage: string): Promise<string> => {
+    try {
+      const conversationHistory = messages.map(msg => ({
+        role: msg.type === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }));
 
-    if (lowerMessage.includes('defect') || lowerMessage.includes('damage') || lowerMessage.includes('broken')) {
-      response = 'I understand you\'re reporting a component defect. I\'ve logged your complaint with ID: #RC' + Math.floor(Math.random() * 10000) + '. Our maintenance team will inspect the component within 24 hours. Please share the QR code or location details.';
-      category = 'complaint';
-    } else if (lowerMessage.includes('qr') || lowerMessage.includes('scan')) {
-      response = 'For QR code scanning issues: 1) Ensure good lighting, 2) Clean the QR code surface, 3) Update the mobile app. If issues persist, I can generate a backup tracking code for you.';
-      category = 'info';
-    } else if (lowerMessage.includes('maintenance')) {
-      response = 'Maintenance request received. Based on AI analysis, I recommend scheduling maintenance within 7 days. I\'ll notify the maintenance team and provide you with a service ticket number.';
-      category = 'resolved';
-    } else if (lowerMessage.includes('error') || lowerMessage.includes('problem')) {
-      response = 'System error reported. I\'ve initiated diagnostic procedures and logged the issue. Our technical team will investigate and provide a fix within 2-4 hours. Error ID: #ERR' + Math.floor(Math.random() * 1000);
-      category = 'complaint';
-    } else {
-      response = 'Thank you for your query. I\'m analyzing your request and will connect you with the appropriate department. Is this related to component tracking, maintenance, or technical support?';
-      category = 'info';
+      conversationHistory.push({
+        role: 'user',
+        content: userMessage
+      });
+
+      const { data, error } = await supabase.functions.invoke('rail-chat', {
+        body: { messages: conversationHistory }
+      });
+
+      if (error) {
+        console.error('AI function error:', error);
+        throw error;
+      }
+
+      if (data?.error) {
+        if (data.error.includes('Rate limit')) {
+          toast({
+            title: "Rate Limit Reached",
+            description: "Too many requests. Please wait a moment and try again.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Service Error",
+            description: data.error,
+            variant: "destructive",
+          });
+        }
+        return "I'm experiencing high demand right now. Please try again in a moment.";
+      }
+
+      return data.response || "I apologize, I couldn't generate a response.";
+    } catch (error) {
+      console.error('Error calling AI:', error);
+      toast({
+        title: "Connection Error",
+        description: "Failed to connect to AI service. Please try again.",
+        variant: "destructive",
+      });
+      return "I'm having trouble connecting right now. Please try again.";
     }
-
-    return {
-      id: Date.now().toString(),
-      type: 'bot',
-      content: response,
-      timestamp: new Date(),
-      category
-    };
   };
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isTyping) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -101,23 +120,28 @@ const AIChatbot = () => {
       timestamp: new Date()
     };
 
+    const currentInput = inputValue;
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate AI processing delay
-    setTimeout(() => {
-      const botResponse = generateBotResponse(inputValue);
-      setMessages(prev => [...prev, botResponse]);
-      setIsTyping(false);
+    try {
+      const aiResponse = await getAIResponse(currentInput);
       
-      if (botResponse.category === 'complaint') {
-        toast({
-          title: "Complaint Logged",
-          description: "Your complaint has been registered and assigned to our team.",
-        });
-      }
-    }, 1500);
+      const botMessage: Message = {
+        id: Date.now().toString(),
+        type: 'bot',
+        content: aiResponse,
+        timestamp: new Date(),
+        category: 'info'
+      };
+
+      setMessages(prev => [...prev, botMessage]);
+    } catch (error) {
+      console.error('Error in handleSendMessage:', error);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   const handleQuickAction = (action: string) => {
