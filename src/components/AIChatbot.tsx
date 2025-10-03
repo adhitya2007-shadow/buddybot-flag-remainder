@@ -160,10 +160,10 @@ const AIChatbot = () => {
               </CardTitle>
             </CardHeader>
 
-            <CardContent className="flex-1 flex flex-col p-0">
+            <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
               {/* Messages Area */}
-              <ScrollArea className="flex-1 p-4">
-                <div className="space-y-4">
+              <ScrollArea className="flex-1 p-4 h-full">
+                <div className="space-y-4 pr-4">
                   {messages.map((message) => (
                     <div
                       key={message.id}
@@ -172,7 +172,7 @@ const AIChatbot = () => {
                       <div className={`flex items-start gap-3 max-w-[80%] ${
                         message.type === 'user' ? 'flex-row-reverse' : 'flex-row'
                       }`}>
-                        <div className={`p-2 rounded-full ${
+                        <div className={`p-2 rounded-full flex-shrink-0 ${
                           message.type === 'user' 
                             ? 'bg-primary text-primary-foreground' 
                             : 'bg-secondary text-secondary-foreground'
@@ -183,14 +183,14 @@ const AIChatbot = () => {
                           }
                         </div>
                         
-                        <div className={`p-3 rounded-lg ${
+                        <div className={`p-3 rounded-lg break-words ${
                           message.type === 'user'
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-card border steel-shadow'
                         }`}>
                           <div className="flex items-start gap-2 mb-1">
                             {message.type === 'bot' && getCategoryIcon(message.category)}
-                            <p className="text-sm">{message.content}</p>
+                            <p className="text-sm break-words whitespace-pre-wrap">{message.content}</p>
                           </div>
                           <p className="text-xs opacity-70">
                             {message.timestamp.toLocaleTimeString()}
