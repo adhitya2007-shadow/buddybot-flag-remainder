@@ -49,15 +49,13 @@ const AIChatbot = () => {
   ];
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
   };
 
   useEffect(() => {
-    // Delay scroll slightly to allow animation to start
-    const timer = setTimeout(() => {
-      scrollToBottom();
-    }, 50);
-    return () => clearTimeout(timer);
+    scrollToBottom();
   }, [messages]);
 
   const getAIResponse = async (userMessage: string): Promise<string> => {
